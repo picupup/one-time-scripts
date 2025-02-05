@@ -10,6 +10,5 @@ Also you can use `./stop.sh` to stop the job
 In your cronjob change the directory to the path of this directory and run the script `./crop-script.sh`.:
 
 ```bash
-cd <path>/cpu-limit.d
-./cron-script.sh
+*/30 * * * * cd <path>/cpu-limiter.d && ./cron-script.sh >/tmp/cron-cpu-limiter.log 2>&1
 ```
