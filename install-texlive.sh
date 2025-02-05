@@ -2,8 +2,10 @@
 # SCRIPT: install-texlive.sh
 # AUTHOR: erfan-main 
 # DATE: 2024-11-12T17:46:55
-# PURPOSE: It installs the current texlive
-# GITHUB_URL: https://raw.githubusercontent.com/picupup/scripts/refs/heads/main/one-time-bin/install-texlive.sh
+# PURPOSE: It installs the current texlive. 
+#	Consider using this install guid instead of this script: 
+#	https://tug.org/texlive/quickinstall.html
+#
 # FLAGS: 
 #       -p : path: Recommended, and default, is "$HOME/texlive" or set it to "/usr/local/texlive" if you have root access.
 #
