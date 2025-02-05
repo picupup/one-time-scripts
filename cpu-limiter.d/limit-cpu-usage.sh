@@ -13,6 +13,8 @@
 
 pids_list=()
 
+# cpu limit in percentage
+lim=100
 function pid_exists () {
   for pid in "${pids_list[@]}"; do
     if [ "$pid" = "$1" ]; then
@@ -26,12 +28,12 @@ function limit () {
  ps -aeo %cpu,pid | tail -n +2 | sort -k1 -nr | head | while read cpu pid; do
  
   cpu=$(echo $cpu | tr -dc '[0-9,.]' | cut -d ',' -f 1 | cut -d '.' -f 1)
-  if [ ${cpu} -gt 100 ]; then
+  if [ ${cpu} -gt ${lim} ]; then
    if pid_exists $pid; then
      continue
    fi
    echo "limiting $pid $cpu%"
-   cpulimit -p $pid -l 100 &
+   cpulimit -p $pid -l ${lim} &
    pids_list+=($pid)
   fi
   
