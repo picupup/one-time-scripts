@@ -5,7 +5,7 @@
 # REV: 1.0
 # ARGUMENTS: [1:        ][2:		][3:		][4:        ]
 #
-# PURPOSE: restarts cpu limiter
+# PURPOSE: Re-starts cpu limiter
 #
 # set -x # Uncomment to debug
 # set -n # Uncomment to check script syntax without execution
@@ -20,6 +20,8 @@ echo -n "OLD PID: '${pid}'"
 	echo -en "; Stopped.\n" || \
 	echo -en "; couln't be stopped. Job might not exists anymore.\n"
 
-nohup ./limit-cpu-usage.sh >/tmp/limit-cpu.txt 2>&2 &
+log=/tmp/cpu-limiter.log
+> $log
+nohup ./limit-cpu-usage.sh >$log 2>&2 &
 echo -n "$!" > ${pid_file}
 echo "NEW PID: '$(cat ${pid_file})'"
