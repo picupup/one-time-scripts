@@ -3,9 +3,9 @@
 # AUTHOR: ...
 # DATE: 2025-02-05T11:06:21
 # REV: 1.0
-# ARGUMENTS: [1:        ][2:		][3:		][4:        ]
+# ARGUMENTS: [1: percentage of cpu limit ][2: sleep time between each check in seconds ][3:		][4:        ]
 #
-# PURPOSE: limits cpu usage for all process using more than 100 %cpu
+# PURPOSE: If a process cpu usage exceeds the limit it will set the limit using the `cpulimit` command
 #
 # set -x # Uncomment to debug
 # set -n # Uncomment to check script syntax without execution
@@ -14,7 +14,10 @@
 pids_list=()
 
 # cpu limit in percentage
-lim=99
+lim=${1:-90}
+sleep_time=${2:-3} # In seconds
+
+echo "Lim: '${lim}%'; Delay: ${sleep_time}"
 function pid_exists () {
   for pid in "${pids_list[@]}"; do
     if [ "$pid" = "$1" ]; then
@@ -44,5 +47,5 @@ function limit () {
 while true; do
  limit
  echo "[$(date +'%FT%T')] sleeping"
- sleep 5
+ sleep ${sleep_time:-5}
 done

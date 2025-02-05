@@ -20,6 +20,6 @@ echo -n "OLD PID: '${pid}'"
 	echo -en "; Stopped.\n" || \
 	echo -en "; couln't be stopped. Job might not exists anymore.\n"
 
-nohup ./limit-cpu-usage.sh &>/tmp/limit-cpu.txt &
+nohup ./limit-cpu-usage.sh >/tmp/limit-cpu.txt 2>&2 &
 echo -n "$!" > ${pid_file}
 echo "NEW PID: '$(cat ${pid_file})'"
