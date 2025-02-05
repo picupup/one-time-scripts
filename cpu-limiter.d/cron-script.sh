@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# SCRIPT: restart.sh 
+# SCRIPT: cron-scrip.sh 
 # AUTHOR: ...
 # DATE: 2025-02-05T11:06:21
 # REV: 1.0
 # ARGUMENTS: [1:        ][2:		][3:		][4:        ]
 #
-# PURPOSE: restarts cpu limiter
+# PURPOSE: Script to run in your cron job
 #
 # set -x # Uncomment to debug
 # set -n # Uncomment to check script syntax without execution
