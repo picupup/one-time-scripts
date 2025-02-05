@@ -30,7 +30,7 @@ function limit () {
   cpu=$(echo $cpu | tr -dc '[0-9,.]' | cut -d ',' -f 1 | cut -d '.' -f 1)
   pid=$(echo -n $pid | tr -dc '[0-9]')
   if test ${cpu} -gt ${lim}; then
-   if test -z "$pid" -o pid_exists "$pid"; then
+   if [ -z "$pid" ] || pid_exists "$pid"; then
      continue
    fi
    echo "limiting $pid $cpu%"
