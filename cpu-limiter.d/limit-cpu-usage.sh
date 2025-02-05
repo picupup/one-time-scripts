@@ -24,16 +24,17 @@ function pid_exists () {
 
 function limit () {
  ps -aeo %cpu,pid | tail -n +2 | sort -k1 -nr | head | while read cpu pid; do
-  # f = filter
+ 
   cpu=$(echo $cpu | tr -dc '[0-9,.]' | cut -d ',' -f 1 | cut -d '.' -f 1)
   if [ ${cpu} -gt 100 ]; then
-   if [ pid_exists $pid ]; then
+   if pid_exists $pid; then
      continue
    fi
    echo "limiting $pid $cpu%"
    cpulimit -p $pid -l 100 &
    pids_list+=($pid)
   fi
+  
  done
 }
 
