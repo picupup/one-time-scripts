@@ -14,7 +14,7 @@
 pid_file=~/.cpu-limit.pid
 touch ${pid_file}
 
-pid=${pid_file}
+pid=$(cat ${pid_file})
 echo -n "OLD PID: '${pid}'"
 ./_stop.sh "${pid}" &>/dev/null && \
 	echo -en "; Stopped.\n" || \
