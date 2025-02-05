@@ -14,16 +14,9 @@
 pid_file=~/.cpu-limit.pid
 touch ${pid_file}
 
-function stop {
-        local l_pid
-        l_pid=${1}
-        pkill -TERM -P "${l_pid}"
-        kill -9 "${l_pid}"
-}
-
 pid=${pid_file}
 echo -n "OLD PID: '${pid}'"
-stop "${pid}" &>/dev/null && \
+./_stop.sh "${pid}" &>/dev/null && \
 	echo -en "; Stopped.\n" || \
 	echo -en "; couln't be stopped. Job might not exists anymore.\n"
 
