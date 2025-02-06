@@ -19,8 +19,8 @@ sleep_time=${2:-5} # In seconds
 
 echo "Lim: '${lim}%'; Delay: ${sleep_time}"
 function pid_exists () {
-  for pid in "${pids_list[@]}"; do
-    if [ "$pid" = "$1" ]; then
+  for pid in ${pids_list[@]}; do
+    if [ $pid -eq $1 ]; then
       return 0
     fi
   done
@@ -33,10 +33,14 @@ function limit () {
   cpu=$(echo $cpu | tr -dc '[0-9,.]' | cut -d ',' -f 1 | cut -d '.' -f 1)
   pid=$(echo -n $pid | tr -dc '[0-9]')
   if test ${cpu} -gt ${lim}; then
-   if [ -z "$pid" ] || pid_exists "$pid"; then
+   if [ -z "$pid" ]; then
      continue
    fi
-	comm=${comm%% *}
+   if pid_exists $pid; then
+     continue
+   fi
+   
+   comm=${comm%% *}
    echo -e "\nlimiting $pid $cpu% $comm"
    cpulimit -p $pid -l ${lim} &
    pids_list+=($pid)

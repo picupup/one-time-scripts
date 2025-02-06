@@ -15,5 +15,6 @@ pid="${1:-""}"
 if test -n "${pid}"; then
 	pkill -TERM -P "${pid}" &>/dev/null
 	kill -9 "${pid}" &>/dev/null
+	pkill -f cpulimit
 fi
 
