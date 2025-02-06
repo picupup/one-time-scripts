@@ -14,8 +14,8 @@
 pids_list=()
 
 # cpu limit in percentage
-lim=${1:-90}
-sleep_time=${2:-3} # In seconds
+lim=${1:-200}
+sleep_time=${2:-5} # In seconds
 
 echo "Lim: '${lim}%'; Delay: ${sleep_time}"
 function pid_exists () {
@@ -28,7 +28,7 @@ function pid_exists () {
 }
 
 function limit () {
- ps -aeo %cpu,pid | tail -n +2 | sort -k1 -nr | head | while read cpu pid; do
+ ps -aeo %cpu,pid,comm | tail -n +2 | sort -k1 -nr | head | while read cpu pid comm; do
  
   cpu=$(echo $cpu | tr -dc '[0-9,.]' | cut -d ',' -f 1 | cut -d '.' -f 1)
   pid=$(echo -n $pid | tr -dc '[0-9]')
@@ -36,7 +36,8 @@ function limit () {
    if [ -z "$pid" ] || pid_exists "$pid"; then
      continue
    fi
-   echo "limiting $pid $cpu%"
+	comm=${comm%% *}
+   echo -e "\nlimiting $pid $cpu% $comm"
    cpulimit -p $pid -l ${lim} &
    pids_list+=($pid)
   fi
@@ -46,6 +47,6 @@ function limit () {
 
 while true; do
  limit
- echo "[$(date +'%FT%T')] sleeping"
+ echo -en "\r[$(date +'%FT%T')] sleeping"
  sleep ${sleep_time:-5}
 done
