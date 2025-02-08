@@ -6,7 +6,7 @@ set -x  # Debug mode
 
 groupuser=${1:-"cia-2024"}
 
-repo=${2:-"/home/$LOGNAME/bericht_webseite"}
+repo=${2:-"/home/$LOGNAME/repos/bericht_webseite"}
 dest_dir=${3:-"/var/www/html/${groupuser}"}
 
 copy=$(mktemp -d)
@@ -32,4 +32,4 @@ sudo -iu ${groupuser} bash -c "rsync -av '$copy/' '$dest_dir/'"
 
 # Cleanup
 rm -rf "$copy"
-echo "✅ Deployment successful!"
+echo "Deployment successful!"
