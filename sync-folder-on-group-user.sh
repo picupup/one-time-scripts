@@ -24,13 +24,13 @@ fi
 git -C "$repo" pull
 
 # Copy files excluding hidden ones and README*
-rsync -av --progress --exclude='.*' --exclude='README*' "$repo/" "$copy/"
+rsync -av --delete --exclude='.*' --exclude='README*' "$repo/" "$copy/"
 
 # Set permissions
 find "$copy" -type d -exec chmod 755 {} + \
   -o -type f -exec chmod 744 {} +
 
 # Transfer to target user
-sudo -iu ${groupuser} bash -c "rsync -av '$copy/' '$dest_dir/'"
+sudo -iu ${groupuser} bash -c "rsync -av --delete --exclude='cia-diashow*' '$copy/' '$dest_dir/'"
 
 echo "Deployment successful!"
