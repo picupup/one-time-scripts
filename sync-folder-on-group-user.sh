@@ -24,6 +24,7 @@ fi
 git -C "$repo" pull
 
 if [[ -d "${repo}/dist" ]]; then
+  echo "Dist ordner exists"
   repo="${repo}/dit"
 fi
 
