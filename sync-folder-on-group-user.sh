@@ -23,6 +23,10 @@ fi
 # Pull latest changes
 git -C "$repo" pull
 
+if [[ -d "${repo}/dist" ]]; then
+  repo="${repo}/dit"
+fi
+
 # Copy files excluding hidden ones and README*
 rsync -av --delete --exclude='.*' --exclude='README*' "$repo/" "$copy/"
 
